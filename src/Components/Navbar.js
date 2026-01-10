@@ -10,6 +10,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import logo from "../assets/white-logo.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -32,18 +33,15 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Typography
+          <Box
+            component="img"
+            src={logo}
+            alt="Muhammad Ahmed"
             sx={{
-              fontFamily: "Comfortaa",
-              fontWeight: 900,
-              fontSize: { xs: "20px", md: "25px" },
-              background: "linear-gradient(90deg, #00F0FF, #00458E)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              // width: "80%",
+              width: { xs: "35px", sm: "50px" },
             }}
-          >
-            Portfolio
-          </Typography>
+          />
 
           {/* Desktop Menu */}
           <Box
