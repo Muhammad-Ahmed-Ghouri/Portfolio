@@ -1,6 +1,8 @@
-body, * {
+body {
   margin: 0;
   font-family: "Comfortaa", sans-serif !important;
+  background: rgb(14, 16, 16);
+  height: 1500px;
 }
 
 code {
