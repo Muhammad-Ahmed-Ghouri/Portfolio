@@ -27,6 +27,9 @@ export default function About() {
       justifyContent={"space-around"}
       width={"90%"}
       margin={"150px auto"}
+      sx={{
+        flexDirection: { xs: "column", md: "row" },
+      }}
     >
       {/* Left Side */}
       <Box item xs={12} md={5} width={"50%"}>
@@ -180,7 +183,7 @@ export default function About() {
                   background:
                     "linear-gradient(to bottom, #2C6CBC, #71C3F7, #F6F6F6)",
                   zIndex: 0,
-                  marginLeft: "5px",
+                  margin: "0 25px 0 5px",
                 }}
               />
               <Box
@@ -204,7 +207,7 @@ export default function About() {
                 padding: "20px",
                 color: "#fff",
                 boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
-                width: "85%",
+                width: { xs: "100%", md: "85%", xl: "90%" },
               }}
             >
               <Typography
