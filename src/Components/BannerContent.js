@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import profileImage from "../assets/profileImage.jpg";
 import { Box, Typography, Grid } from "@mui/material";
 
 export default function BannerContent() {
+  const [work, setWork] = useState("");
+
+  const myRole = [
+    "Front-End Web Developer",
+    "MERN Stack Developer",
+    "Building Modern Web Interfaces",
+  ];
+  const arrayCounter = useRef(0);
+  const stringCounter = useRef(0);
+  const intervalId = useRef(null);
+  let createString = "";
+
+  function typingAnimation() {
+    intervalId.current = setInterval(() => {
+      if (stringCounter.current < myRole[arrayCounter.current].length) {
+        let text = myRole[arrayCounter.current].split("");
+
+        createString += text[stringCounter.current];
+        setWork(createString);
+        stringCounter.current++;
+      } else {
+        clearInterval(intervalId.current);
+        stringCounter.current = 0;
+        createString = "";
+        {
+          arrayCounter.current >= myRole.length - 1
+            ? (arrayCounter.current = 0)
+            : arrayCounter.current++;
+        }
+      }
+    }, 150);
+  }
+
+  useEffect(() => {
+    typingAnimation();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -61,7 +98,6 @@ export default function BannerContent() {
               >
                 Meet Muhammad Ahmed
               </Typography>
-
               <Typography
                 sx={{
                   color: "rgb(191, 219, 254)",
@@ -73,9 +109,12 @@ export default function BannerContent() {
                     xl: "1.5",
                   },
                   marginTop: "10px",
+                  borderRight: "3px solid white",
+                  width: "max-content",
+                  paddingRight: "10px",
                 }}
               >
-                Front-End Web Developer
+                {work}
               </Typography>
 
               <Typography
