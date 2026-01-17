@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -14,16 +14,33 @@ import logo from "../assets/white-logo.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [bg, setBg] = useState(null);
 
   const navItems = ["Home", "About", "Projects", "Contact"];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setBg("rgba(255, 255, 255, 0.05)");
+      } else {
+        setBg("transparent");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
 
   return (
     <>
       <AppBar
         position="fixed"
+        color="transparent" // important!
         sx={{
-          backgroundColor: "black",
-          opacity: "0.8",
+          backgroundColor: bg,
+          transition: "all 0.5s",
+          border: "none",
         }}
       >
         <Toolbar
