@@ -19,12 +19,6 @@
   }
 }
 
-/* app/globals.css */
 body {
-  font-family: 'Cossette Texte', sans-serif;
-  font-weight: 400;
-}
-
-.cossette-texte-bold {
-  font-weight: 700;
+  font-family: var(--font-urbanist), sans-serif;
 }
