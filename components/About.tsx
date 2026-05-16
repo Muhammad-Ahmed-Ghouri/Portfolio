@@ -244,7 +244,7 @@ export default function AboutSection() {
       <section 
         ref={sectionRef} 
         id="about"
-        className="relative min-h-screen bg-[#050810] overflow-hidden pt-[120px] pb-[140px] px-0 font-['Space_Grotesk',_sans-serif] text-[#e2e8f5] before:absolute before:inset-0 before:bg-[linear-gradient(rgba(59,130,246,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(59,130,246,0.03)_1px,_transparent_1px)] before:bg-[size:60px_60px] before:pointer-events-none"
+        className="relative min-h-screen bg-[#050810] overflow-hidden pt-[190px] pb-[30px] px-0 font-['Space_Grotesk',_sans-serif] text-[#e2e8f5] before:absolute before:inset-0 before:bg-[linear-gradient(rgba(59,130,246,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(59,130,246,0.03)_1px,_transparent_1px)] before:bg-[size:60px_60px] before:pointer-events-none"
       >
         {/* Ambients */}
         <div className="absolute rounded-full pointer-events-none blur-[90px] w-[700px] h-[700px] -top-[200px] -right-[200px] bg-[radial-gradient(circle,_rgba(37,99,235,0.18)_0%,_transparent_70%)]" />
