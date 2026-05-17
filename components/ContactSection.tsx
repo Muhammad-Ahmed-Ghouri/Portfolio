@@ -21,7 +21,7 @@ const socials = [
       </svg>
     ),
   },
-  {
+{
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/muhammad-ahmed-995b90355/",
     icon: (
@@ -31,26 +31,24 @@ const socials = [
     ),
   },
   {
-  label: "WhatsApp",
-  href: "https://wa.me/923001296099",
-icon: (
-    <svg 
-      width="24" 
-      height="24" 
-      viewBox="0 0 24 24" 
-      fill="none" 
-      stroke="currentColor" 
-      strokeWidth="2" 
-      strokeLinecap="round" 
-      strokeLinejoin="round"
-    >
-      {/* Bahar ka main chat bubble circle */}
-      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-      {/* Andar ka phone receiver icon jo line-art style mein clean dikhta hai */}
-      <path d="M15.05 12.3c-.22-.1-.82-.4-1-.46-.14-.05-.24-.08-.34.08-.1.15-.38.46-.46.56-.1.1-.18.1-.4 0a5.2 5.2 0 0 1-1.48-.92 5.72 5.72 0 0 1-1-1.27c-.12-.22 0-.34.1-.44.1-.1.2-.23.3-.33.1-.1.13-.17.2-.3a.47.47 0 0 0-.02-.43c-.05-.1-.4-.98-.55-1.34-.14-.35-.3-.3-.4-.3h-.35a.8.8 0 0 0-.57.26 2.45 2.45 0 0 0-.77 1.83c0 1.15.83 2.26.95 2.42.1.16 1.64 2.5 4 3.5a8.42 8.42 0 0 0 2.66.52c.57 0 1.05-.05 1.44-.1a1.94 1.94 0 0 0 1.27-.9 1.62 1.62 0 0 0 .1-.9c-.04-.1-.14-.15-.35-.25z" />
-    </svg>
-  ),
-},
+    label: "WhatsApp",
+    href: "https://wa.me/923001296099",
+    icon: (
+      <svg 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      >
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+        <path d="M15.05 12.3c-.22-.1-.82-.4-1-.46-.14-.05-.24-.08-.34.08-.1.15-.38.46-.46.56-.1.1-.18.1-.4 0a5.2 5.2 0 0 1-1.48-.92 5.72 5.72 0 0 1-1-1.27c-.12-.22 0-.34.1-.44.1-.1.2-.23.3-.33.1-.1.13-.17.2-.3a.47.47 0 0 0-.02-.43c-.05-.1-.4-.98-.55-1.34-.14-.35-.3-.3-.4-.3h-.35a.8.8 0 0 0-.57.26 2.45 2.45 0 0 0-.77 1.83c0 1.15.83 2.26.95 2.42.1.16 1.64 2.5 4 3.5a8.42 8.42 0 0 0 2.66.52c.57 0 1.05-.05 1.44-.1a1.94 1.94 0 0 0 1.27-.9 1.62 1.62 0 0 0 .1-.9c-.04-.1-.14-.15-.35-.25z" />
+      </svg>
+    ),
+  },
   {
     label: "Email",
     href: "https://mail.google.com/mail/?view=cm&fs=1&to=muhammadahmed7274@gmail.com",
@@ -191,10 +189,10 @@ export default function ContactSection() {
       <section
         ref={sectionRef}
         id="contact"
+        className="contact-section-wrapper"
         style={{
           position: "relative", overflow: "hidden",
           background: "#050810", minHeight: "100vh",
-          padding: "120px 0 80px",
           fontFamily: "'Space Grotesk', sans-serif",
         }}
       >
@@ -235,13 +233,13 @@ export default function ContactSection() {
         </div>
 
         {/* ── Content ── */}
-        <div style={{
+        <div className="contact-main-container" style={{
           position: "relative", zIndex: 2,
-          maxWidth: 1100, margin: "0 auto", padding: "0 40px",
+          maxWidth: 1100, margin: "0 auto",
         }}>
 
           {/* ── Header ── */}
-          <div style={{ textAlign: "center", marginBottom: 72 }}>
+          <div className="contact-header-block" style={{ textAlign: "center" }}>
             <motion.div
               initial={{ opacity: 0, y: -16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -268,6 +266,7 @@ export default function ContactSection() {
                 fontSize: "clamp(38px,5.5vw,66px)", fontWeight: 800,
                 lineHeight: 1.06, letterSpacing: "-0.03em", color: "#e2e8f5",
               }}
+              className="wrap-break-word"
             >
               Let&rsquo;s build something{" "}
               <span style={{
@@ -298,14 +297,13 @@ export default function ContactSection() {
           </div>
 
           {/* ── Two-column layout ── */}
-          <div style={{
+          <div className="contact-grid-layout" style={{
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 48, alignItems: "start",
+            alignItems: "start",
           }}>
 
             {/* ── LEFT — Radar + Info ── */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
+            <div className="contact-info-column" style={{ display: "flex", flexDirection: "column" }}>
 
               {/* Radar */}
               <motion.div
@@ -313,10 +311,10 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                className="radar-orb-container"
                 style={{
                   position: "relative",
                   width: 260, height: 260,
-                  margin: "0 auto",
                 }}
               >
                 {/* Outer decorative rings */}
@@ -330,10 +328,6 @@ export default function ContactSection() {
                   border: "1px dashed rgba(59,130,246,0.08)",
                   animation: "spin-ccw 25s linear infinite",
                 }} />
-                <style>{`
-                  @keyframes spin-cw  { to { transform:rotate(360deg);  } }
-                  @keyframes spin-ccw { to { transform:rotate(-360deg); } }
-                `}</style>
 
                 {/* Canvas radar */}
                 <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden" }}>
@@ -354,14 +348,11 @@ export default function ContactSection() {
                     animation: "pulse-dot 2s ease-in-out infinite",
                   }} />
                   Signal active
-                  <style>{`
-                    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
-                  `}</style>
                 </div>
               </motion.div>
 
               {/* Contact info cards */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
+              <div className="info-cards-stack" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {contactInfo.map((item, i) => (
                   <motion.div
                     key={item.label}
@@ -369,6 +360,7 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className="individual-info-card"
                     style={{
                       display: "flex", alignItems: "center", gap: 14,
                       background: "rgba(11,15,30,0.9)",
@@ -385,16 +377,15 @@ export default function ContactSection() {
                     }}>
                       {item.icon}
                     </div>
-                    <div>
+                    <div className="info-card-text">
                       <div style={{ fontSize: 10, color: "#7b8bab", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 3 }}>
                         {item.label}
                       </div>
-                      <div style={{ fontSize: 14, color: "#e2e8f5", fontWeight: 500 }}>
+                      <div className="info-card-value" style={{ color: "#e2e8f5", fontWeight: 500 }}>
                         {item.value}
                       </div>
                     </div>
 
-                    {/* availability dot */}
                     {item.label === "Availability" && (
                       <div style={{ marginLeft: "auto" }}>
                         <div style={{
@@ -414,6 +405,7 @@ export default function ContactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
+                className="social-links-row"
                 style={{ display: "flex", gap: 12 }}
               >
                 {socials.map(({ label, href, icon }) => (
@@ -457,10 +449,11 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="contact-form-card"
               style={{
                 background: "rgba(11,15,30,0.9)",
                 border: "1px solid rgba(59,130,246,0.12)",
-                borderRadius: 20, padding: "40px 36px",
+                borderRadius: 20,
                 position: "relative", overflow: "hidden",
               }}
             >
@@ -504,7 +497,7 @@ export default function ContactSection() {
                       <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
                   </div>
-                  <div>
+                  <div style={{ padding: "0 20px" }}>
                     <p style={{ fontFamily: "'Syne',sans-serif", fontSize: 22, fontWeight: 800, color: "#e2e8f5", marginBottom: 8 }}>
                       Signal received!
                     </p>
@@ -542,7 +535,7 @@ export default function ContactSection() {
                     </p>
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                  <div className="form-name-email-row" style={{ display: "grid", gap: 16 }}>
                     <FormField label="Name"  placeholder="Your name"  delay={0.1} />
                     <FormField label="Email" type="email" placeholder="your@email.com" delay={0.15} />
                   </div>
@@ -601,17 +594,19 @@ export default function ContactSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.5 }}
+            className="contact-footer-strip"
             style={{
-              marginTop: 72, paddingTop: 28,
               borderTop: "1px solid rgba(59,130,246,0.1)",
               display: "flex", alignItems: "center", justifyContent: "space-between",
               fontSize: 12, color: "#7b8bab",
+              paddingTop: 28,
+              marginTop: 28,
             }}
           >
-            <span style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: "#e2e8f5", letterSpacing: "-0.01em" }}>
+            <span style={{ fontFamily: "'Syne',sans-serif", fontNav: "bold", fontWeight: 700, color: "#e2e8f5", letterSpacing: "-0.01em" }}>
               Muhammad Ahmed<span style={{ color: "#3b82f6" }}>.</span>
             </span>
-            <span>Crafted with precision · {new Date().getFullYear()}</span>
+            <span className="footer-copyright-text">Crafted with precision · {new Date().getFullYear()}</span>
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px rgba(74,222,128,0.5)" }} />
               Available for work
@@ -619,6 +614,43 @@ export default function ContactSection() {
           </motion.div>
         </div>
       </section>
+
+      {/* ── Seamless Custom Adaptive CSS ── */}
+      <style>{`
+        .contact-section-wrapper { padding: 120px 0 80px; }
+        .contact-main-container { padding: 0 40px; }
+        .contact-header-block { margin-bottom: 72px; }
+        .contact-grid-layout { grid-template-columns: 1fr 1fr; gap: 48px; }
+        .contact-info-column { gap: 36px; }
+        .radar-orb-container { margin: 0 auto; }
+        .form-name-email-row { grid-template-columns: 1fr 1fr; }
+        .contact-form-card { padding: 40px 36px; }
+        .contact-footer-strip { marginTop: 72px; paddingTop: 28px; }
+
+        @media (max-width: 991px) {
+          .contact-grid-layout { grid-template-columns: 1fr !important; gap: 56px; }
+          .contact-info-column { gap: 40px; items: center; text-align: center; }
+          .individual-info-card { width: 100%; max-w-xl; text-align: left; }
+          .social-links-row { justify-content: center; width: 100%; }
+          .contact-form-card { max-w-xl; width: 100%; margin: 0 auto; }
+        }
+
+        @media (max-width: 768px) {
+          .contact-section-wrapper { padding: 100px 0 60px; }
+          .contact-main-container { padding: 0 24px !important; }
+          .contact-header-block { margin-bottom: 48px; }
+          .contact-form-card { padding: 32px 24px !important; }
+          .contact-footer-strip { flex-direction: column; gap: 16px; text-align: center; margin-top: 56px; }
+          .footer-copyright-text { order: 3; }
+        }
+
+        @media (max-width: 480px) {
+          .contact-main-container { padding: 0 18px !important; }
+          .form-name-email-row { grid-template-columns: 1fr !important; }
+          .info-card-value { font-size: 13px !important; word-break: break-all; }
+          .info-card-text { max-w-[calc(100%-60px)]; }
+        }
+      `}</style>
     </>
   );
 }

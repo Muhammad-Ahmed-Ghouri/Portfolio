@@ -157,10 +157,10 @@ export default function ProjectsSection() {
       <section
         ref={sectionRef}
         id="projects"
+        className="projects-section-wrapper"
         style={{
           position: "relative", overflow: "hidden",
           background: "#050810", minHeight: "100vh",
-          padding: "120px 0 120px",
           fontFamily: "'Space Grotesk', sans-serif",
           color: "#e2e8f5",
         }}
@@ -202,17 +202,17 @@ export default function ProjectsSection() {
           PROJECTS
         </div>
 
-        <div style={{
+        <div className="projects-section-container" style={{
           position: "relative", zIndex: 2,
-          maxWidth: 1160, margin: "0 auto", padding: "0 40px",
+          maxWidth: 1160, margin: "0 auto",
         }}>
 
           {/* ── Header + Constellation ── */}
-          <div style={{
-            display: "flex", alignItems: "flex-end",
-            justifyContent: "space-between", gap: 40, marginBottom: 72,
+          <div className="header-orb-row-block" style={{
+            display: "flex",
+            justifyContent: "space-between", gap: 40,
           }}>
-            <div style={{ maxWidth: 560 }}>
+            <div className="title-text-column mx-auto lg:mx-0" style={{ maxWidth: 560, width: "100%" }}>
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -273,6 +273,7 @@ export default function ProjectsSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              className="constellation-orb-wrapper"
               style={{ flexShrink: 0, position: "relative" }}
             >
               <div style={{
@@ -328,42 +329,45 @@ export default function ProjectsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
+            className="filter-strip-container my-[50px]"
             style={{
               display: "flex", flexWrap: "wrap", gap: 8,
-              marginBottom: 28, alignItems: "center",
+              alignItems: "center",
             }}
           >
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                style={{
-                  fontSize: 11, fontWeight: 600,
-                  letterSpacing: "0.08em", textTransform: "uppercase",
-                  padding: "6px 16px", borderRadius: 99, cursor: "pointer",
-                  border: `1px solid ${activeFilter === cat ? "rgba(59,130,246,0.45)" : "rgba(59,130,246,0.1)"}`,
-                  background: activeFilter === cat ? "rgba(59,130,246,0.16)" : "transparent",
-                  color: activeFilter === cat ? "#60a5fa" : "#7b8bab",
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  transition: "all 0.22s",
-                }}
-              >
-                {cat}
-              </button>
-            ))}
-            <span style={{
-              marginLeft: "auto", fontSize: 11, color: "#7b8bab",
+            <div className="filter-buttons-scrollable">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setFilter(cat)}
+                  style={{
+                    fontSize: 11, fontWeight: 600,
+                    letterSpacing: "0.08em", textTransform: "uppercase",
+                    padding: "6px 16px", borderRadius: 99, cursor: "pointer",
+                    border: `1px solid ${activeFilter === cat ? "rgba(59,130,246,0.45)" : "rgba(59,130,246,0.1)"}`,
+                    background: activeFilter === cat ? "rgba(59,130,246,0.16)" : "transparent",
+                    color: activeFilter === cat ? "#60a5fa" : "#7b8bab",
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    transition: "all 0.22s",
+                    whiteSpace: "nowrap"
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <span className="projects-total-counter" style={{
+              fontSize: 11, color: "#7b8bab",
               display: "flex", alignItems: "center", gap: 7,
             }}>
-              <div style={{ width: 1, height: 14, background: "rgba(59,130,246,0.15)" }} />
+              <div style={{ width: 1, height: 14, background: "rgba(59,130,246,0.15)" }} className="counter-separator" />
               {filtered.length} project{filtered.length !== 1 ? "s" : ""}
             </span>
           </motion.div>
 
           {/* ── Projects grid ── */}
-          <div style={{
+          <div className="projects-grid-response-box" style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
             gap: 18,
           }}>
             {filtered.map((project, i) => (
@@ -378,6 +382,58 @@ export default function ProjectsSection() {
           </div>
         </div>
       </section>
+
+      {/* ── Core Custom Boundary Responsive CSS ── */}
+      <style>{`
+        .projects-section-wrapper { padding: 120px 0 120px; }
+        .projects-section-container { padding: 0 40px; }
+        .header-orb-row-block { flex-direction: row; items: flex-end; margin-bottom: 72px; }
+        .filter-strip-container { margin-bottom: 28px; width: 100%; }
+        .filter-buttons-scrollable { display: flex; flex-wrap: wrap; gap: 8px; }
+        .projects-grid-response-box { grid-template-columns: repeat(3, 1fr); }
+        .projects-total-counter { margin-left: auto; }
+
+        @media (max-width: 1150px) {
+          .projects-grid-response-box { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 991px) {
+          .header-orb-row-block { flex-direction: column; items: center; text-align: center; gap: 48px; }
+          .constellation-orb-wrapper { display: flex !important; justify-content: center !important; margin-top: 10px; width: 100%; }
+          .filter-strip-container { flex-direction: column; items: center; gap: 16px; }
+          .projects-total-counter { margin-left: 0 !important; }
+          .counter-separator { display: none; }
+        }
+
+        /* Fix: sm break bounds (min-width: 640px) par strict 2 columns load lagaya hai */
+        @media (min-width: 640px) and (max-width: 1150px) {
+          .projects-grid-response-box { grid-template-columns: repeat(2, 1fr) !important; gap: 16px; }
+        }
+
+        @media (max-width: 768px) {
+          .projects-section-wrapper { padding: 100px 0 100px; }
+          .projects-section-container { padding: 0 24px !important; }
+          .header-orb-row-block { margin-bottom: 44px; }
+          .filter-buttons-scrollable { 
+            width: 100%; 
+            overflow-x: auto; 
+            white-space: nowrap; 
+            padding-bottom: 8px;
+            justify-content: flex-start;
+            scrollbar-width: none;
+          }
+          .filter-buttons-scrollable::-webkit-scrollbar { display: none; }
+        }
+
+        /* Fix: Pure mobile baseline layout below 640px par strictly single column scale lock kiya */
+        @media (max-width: 639px) {
+          .projects-grid-response-box { grid-template-columns: 1fr !important; gap: 16px; }
+        }
+
+        @media (max-width: 480px) {
+          .projects-section-container { padding: 0 18px !important; }
+        }
+      `}</style>
     </>
   );
 }

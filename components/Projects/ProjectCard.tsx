@@ -35,6 +35,8 @@ export default function ProjectCard({ project, index, isActive, onHover }: Proje
       transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={() => onHover(project.id)}
       onMouseLeave={() => onHover(null)}
+      /* Change: Added dynamic class layout scaling for featured cards on smaller displays */
+      className={project.featured ? "col-span-1 sm:col-span-2" : "col-span-1"}
       style={{
         position: "relative",
         background: isActive
@@ -50,7 +52,7 @@ export default function ProjectCard({ project, index, isActive, onHover }: Proje
         boxShadow: isActive
           ? `0 16px 48px ${project.color}`
           : "none",
-        gridColumn: project.featured ? "span 2" : "span 1",
+        /* Change: Removed hardcoded gridColumn from inline styles to prevent layout breakages */
       }}
     >
       {/* Accent bar */}

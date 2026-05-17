@@ -49,7 +49,7 @@ const experiences: Experience[] = [
 
 // ── Rotating 3D Box ────────────────────────────────────────────────────────
 function RotatingBox() {
-const boxRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
   const handRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
@@ -60,10 +60,10 @@ const boxRef = useRef<HTMLDivElement>(null);
 
     if (!el || !hand || !glow) return;
 
-    // 1. Initial base X rotation set karein
+    // 1. Initial base X rotation
     gsap.set(el, { rotateX: 10 });
 
-    // 2. Smooth Infinite Y Rotation (No jump/glitch)
+    // 2. Smooth Infinite Y Rotation
     gsap.to(el, {
       rotateY: 360,
       duration: 12,
@@ -145,6 +145,7 @@ const boxRef = useRef<HTMLDivElement>(null);
     </div>
   );
 }
+
 // ── Experience Card ────────────────────────────────────────────────────────
 function ExperienceCard({
   exp,
@@ -162,19 +163,18 @@ function ExperienceCard({
       initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40, y: 20 }}
       animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-[#0b0f1e] border border-blue-500/12 rounded-[16px] overflow-hidden cursor-default transition-all duration-300 hover:border-blue-500/30 hover:shadow-[0_0_40px_rgba(59,130,246,0.08)]"
+      className="group relative bg-[#0b0f1e] border border-blue-500/12 rounded-[16px] overflow-hidden cursor-default transition-all duration-300 hover:border-blue-500/30 hover:shadow-[0_0_40px_rgba(59,130,246,0.08)] w-full"
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
     >
-      {/* Left accent bar */}
       <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-[#3b82f6] to-transparent rounded-l-[3px]" />
 
-      <div className="pt-[28px] pb-[28px] pr-[28px] pl-[32px]">
-        <div className="flex items-start justify-between gap-4 mb-4">
+      <div className="p-6 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
           <div>
             <p className="font-['Syne'] text-[19px] font-bold text-[#e2e8f5] tracking-tight">{exp.company}</p>
             <p className="text-[13px] text-[#60a5fa] mt-1 font-medium">{exp.role}</p>
           </div>
-          <span className="text-[11px] font-semibold tracking-wider text-[#7b8bab] whitespace-nowrap mt-1 bg-blue-500/8 border border-blue-500/12 py-1 px-[10px] rounded-full">
+          <span className="text-[11px] font-semibold tracking-wider text-[#7b8bab] self-start sm:self-auto bg-blue-500/8 border border-blue-500/12 py-1 px-[10px] rounded-full whitespace-nowrap">
             {exp.period}
           </span>
         </div>
@@ -190,8 +190,7 @@ function ExperienceCard({
         </div>
       </div>
 
-      {/* Subtle corner glow on hover */}
-      <div className="absolute -top-[60px] -right-[60px] w-[160px] h-[160px] bg-[radial-gradient(circle,_rgba(59,130,246,0.35)_0%,_transparent_70%)] opacity-0 rounded-full pointer-events:none transition-opacity duration-400 group-hover:opacity-100" />
+      <div className="absolute -top-[60px] -right-[60px] w-[160px] h-[160px] bg-[radial-gradient(circle,_rgba(59,130,246,0.35)_0%,_transparent_70%)] opacity-0 rounded-full pointer-events-none transition-opacity duration-400 group-hover:opacity-100" />
     </motion.div>
   );
 }
@@ -207,13 +206,11 @@ export default function AboutSection() {
     offset: ["start end", "end start"],
   });
 
-  // Parallax for bg "ABOUT" text
   const bgY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   const bgOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.07, 0.07, 0]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animated reveal line
       gsap.from(lineRef.current, {
         scaleX: 0,
         duration: 1.2,
@@ -230,7 +227,6 @@ export default function AboutSection() {
 
   return (
     <>
-      {/* ── Core Custom Fonts & Core Animation Keyframes ──────────────── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
         
@@ -240,33 +236,33 @@ export default function AboutSection() {
         }
       `}</style>
 
-      {/* ── Section ────────────────────────────────────────────────────── */}
       <section 
         ref={sectionRef} 
         id="about"
-        className="relative min-h-screen bg-[#050810] overflow-hidden pt-[190px] pb-[30px] px-0 font-['Space_Grotesk',_sans-serif] text-[#e2e8f5] before:absolute before:inset-0 before:bg-[linear-gradient(rgba(59,130,246,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(59,130,246,0.03)_1px,_transparent_1px)] before:bg-[size:60px_60px] before:pointer-events-none"
+        className="relative min-h-screen bg-[#050810] overflow-hidden pt-[100px] pb-[40px] md:pb-[60px] px-4 md:px-0 font-['Space_Grotesk',_sans-serif] text-[#e2e8f5] before:absolute before:inset-0 before:bg-[linear-gradient(rgba(59,130,246,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(59,130,246,0.03)_1px,_transparent_1px)] before:bg-[size:60px_60px] before:pointer-events-none"
       >
         {/* Ambients */}
-        <div className="absolute rounded-full pointer-events-none blur-[90px] w-[700px] h-[700px] -top-[200px] -right-[200px] bg-[radial-gradient(circle,_rgba(37,99,235,0.18)_0%,_transparent_70%)]" />
-        <div className="absolute rounded-full pointer-events-none blur-[90px] w-[500px] h-[500px] -bottom-[100px] -left-[100px] bg-[radial-gradient(circle,_rgba(59,130,246,0.1)_0%,_transparent_70%)]" />
+        <div className="absolute rounded-full pointer-events-none blur-[90px] w-[300px] h-[300px] md:w-[700px] md:h-[700px] -top-[100px] md:-top-[200px] -right-[100px] md:-right-[200px] bg-[radial-gradient(circle,_rgba(37,99,235,0.18)_0%,_transparent_70%)]" />
+        <div className="absolute rounded-full pointer-events-none blur-[90px] w-[300px] h-[300px] md:w-[500px] md:h-[500px] -bottom-[50px] md:-bottom-[100px] -left-[50px] md:-left-[100px] bg-[radial-gradient(circle,_rgba(59,130,246,0.1)_0%,_transparent_70%)]" />
 
-        {/* Giant bg ABOUT text — parallax */}
+        {/* Giant bg ABOUT text */}
         <motion.div
           ref={bgTextRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-['Syne'] text-[clamp(140px,_22vw,_280px)] font-[800] tracking-tight whitespace-nowrap text-transparent [-webkit-text-stroke:1.5px_rgba(59,130,246,0.15)] select-none pointer-events-none line-height-1"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-['Syne'] text-[clamp(100px,_20vw,_280px)] font-[800] tracking-tight whitespace-nowrap text-transparent [-webkit-text-stroke:1px_rgba(59,130,246,0.12)] md:[-webkit-text-stroke:1.5px_rgba(59,130,246,0.15)] select-none pointer-events-none line-height-1 z-0"
           style={{ y: bgY, opacity: bgOpacity }}
           aria-hidden
         >
           ABOUT
         </motion.div>
 
-        <div className="relative z-10 max-w-[1160px] mx-auto px-10 md:px-10 sm:px-6">
+        <div className="relative z-10 max-w-[1160px] mx-auto md:px-10 sm:px-2">
           {/* ── Header row ─────────────────────────────────────────────── */}
-          <div className="flex flex-col md:flex-row md:items-start justify-between mb-[72px] gap-10">
-            <div className="max-w-[580px]">
+          {/* Change: Items alignment ko flex-col layout par center kiya taake box perfect scale ho mobile par */}
+          <div className="flex flex-col md:flex-row md:items-start items-center justify-between mb-12 md:mb-[72px] gap-8 md:gap-10">
+            <div className="max-w-[580px] w-full">
               {/* Eyebrow */}
               <motion.div
-                className="inline-flex items-center gap-[10px] text-[12px] font-semibold tracking-[0.18em] uppercase text-[#60a5fa] mb-5"
+                className="inline-flex items-center gap-[10px] text-[12px] font-semibold tracking-[0.18em] uppercase text-[#60a5fa] mb-4 md:mb-5"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -278,7 +274,7 @@ export default function AboutSection() {
 
               {/* Title */}
               <motion.h2
-                className="font-['Syne'] text-[clamp(42px,_6vw,_72px)] font-[800] leading-[1.05] tracking-tight text-[#e2e8f5]"
+                className="font-['Syne'] text-[clamp(34px,_5.5vw,_72px)] font-[800] leading-[1.1] md:leading-[1.05] tracking-tight text-[#e2e8f5]"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -286,15 +282,15 @@ export default function AboutSection() {
               >
                 Building with{" "}
                 <span className="bg-gradient-to-r from-[#3b82f6] to-[#93c5fd] bg-clip-text text-transparent">purpose</span>
-                <br />& precision.
+                <br className="hidden sm:inline" /> & precision.
               </motion.h2>
 
               {/* Divider */}
-              <div ref={lineRef} className="h-[1px] bg-gradient-to-r from-[#2563eb] to-transparent origin-left my-8" />
+              <div ref={lineRef} className="h-[1px] bg-gradient-to-r from-[#2563eb] to-transparent origin-left my-6 md:my-8" />
 
               {/* Bio */}
               <motion.p
-                className="text-[16px] leading-[1.8] text-[#7b8bab] max-w-[520px]"
+                className="text-sm sm:text-[16px] leading-[1.75] md:leading-[1.8] text-[#7b8bab] max-w-[520px]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -304,9 +300,10 @@ export default function AboutSection() {
               </motion.p>
             </div>
 
-            {/* 3D rotating box - Hidden on specific breakpoints matching original media query */}
+            {/* 3D rotating box Wrapper */}
+            {/* Change: Removed 'hidden md:block' to ensure it's visible everywhere, added margin-top for responsive breathing space */}
             <motion.div
-              className="flex-shrink-0 hidden md:block"
+              className="flex-shrink-0 self-center md:self-start mt-6 md:mt-0"
               initial={{ opacity: 0, scale: 0.7 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -318,7 +315,7 @@ export default function AboutSection() {
 
           {/* ── Experience ─────────────────────────────────────────────── */}
           <motion.p
-            className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#7b8bab] mb-[28px] flex items-center gap-3 after:content-[''] after:flex-1 after:h-[1px] after:bg-blue-500/12"
+            className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#7b8bab] mb-6 md:mb-[28px] flex items-center gap-3 after:content-[''] after:flex-1 after:h-[1px] after:bg-blue-500/12"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -327,7 +324,7 @@ export default function AboutSection() {
             Experience
           </motion.p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
             {experiences.map((exp, i) => (
               <ExperienceCard key={exp.company} exp={exp} index={i} />
             ))}

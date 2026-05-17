@@ -174,7 +174,6 @@ export default function SkillsSection() {
 
   return (
     <>
-      {/* ── Global font import (same as About) ── */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
       `}</style>
@@ -182,12 +181,13 @@ export default function SkillsSection() {
       <section
         ref={sectionRef}
         id="skills"
-        className="relative overflow-hidden"
+        className="skills-section-wrapper"
         style={{
           background: "#050810",
           minHeight: "100vh",
-          padding: "120px 0 140px",
           fontFamily: "'Space Grotesk', sans-serif",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
         {/* ── Grid overlay ── */}
@@ -198,12 +198,12 @@ export default function SkillsSection() {
         }} />
 
         {/* ── Ambient glows ── */}
-        <div className="absolute pointer-events-none" style={{
+        <div className="absolute pointer-events-none ambient-glow-left" style={{
           width: 600, height: 600, top: -200, left: -200, borderRadius: "50%",
           background: "radial-gradient(circle,rgba(37,99,235,0.15) 0%,transparent 70%)",
           filter: "blur(80px)",
         }} />
-        <div className="absolute pointer-events-none" style={{
+        <div className="absolute pointer-events-none ambient-glow-right" style={{
           width: 400, height: 400, bottom: -100, right: -100, borderRadius: "50%",
           background: "radial-gradient(circle,rgba(59,130,246,0.09) 0%,transparent 70%)",
           filter: "blur(70px)",
@@ -212,12 +212,11 @@ export default function SkillsSection() {
         {/* ── BG watermark ── */}
         <div
           aria-hidden
-          className="absolute select-none pointer-events-none"
+          className="absolute select-none pointer-events-none core-watermark"
           style={{
             top: "50%", left: "50%",
             transform: "translate(-50%,-50%)",
             fontFamily: "'Syne',sans-serif",
-            fontSize: "clamp(120px,18vw,240px)",
             fontWeight: 800,
             letterSpacing: "-0.02em",
             whiteSpace: "nowrap",
@@ -230,19 +229,20 @@ export default function SkillsSection() {
         </div>
 
         {/* ── Content ── */}
-        <div className="relative z-10 max-w-6xl mx-auto px-10">
+        {/* Fix: Centered structural layout to match other premium sections seamlessly */}
+        <div className="relative z-10 max-w-7xl mx-auto skills-container w-full">
 
           {/* ── Header + Clock row ── */}
-          <div className="flex items-end justify-between gap-10 mb-16">
+          <div className="flex justify-between gap-10 row-header-block w-full">
 
             {/* Left: title block */}
-            <div className="max-w-xl">
+            <div className="max-w-xl text-column w-full m-auto lg:m-0">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="flex items-center gap-3 mb-5"
+                className="flex items-center gap-3 mb-5 eyebrow-element"
                 style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.18em",
                   textTransform: "uppercase", color: "#60a5fa" }}
               >
@@ -255,10 +255,10 @@ export default function SkillsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="section-title-h2"
                 style={{
                   fontFamily: "'Syne',sans-serif",
-                  fontSize: "clamp(38px,5.5vw,64px)",
-                  fontWeight: 800, lineHeight: 1.06,
+                  fontWeight: 800, leading: 1.06,
                   letterSpacing: "-0.03em", color: "#e2e8f5",
                 }}
               >
@@ -297,7 +297,7 @@ export default function SkillsSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="flex-shrink-0"
+              className="flex-shrink-0 clock-wrapper-element"
             >
               {/* Clock card */}
               <div style={{
@@ -357,34 +357,36 @@ export default function SkillsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-3 mb-8 flex-wrap"
+            className="flex items-center justify-between mb-8 flex-wrap filter-tabs-row my-[50px] w-full gap-4"
           >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActive(cat)}
-                style={{
-                  fontSize: 12, fontWeight: 600,
-                  letterSpacing: "0.08em", textTransform: "uppercase",
-                  padding: "7px 18px", borderRadius: 99, cursor: "pointer",
-                  border: `1px solid ${active === cat ? "rgba(59,130,246,0.5)" : "rgba(59,130,246,0.12)"}`,
-                  background: active === cat ? "rgba(59,130,246,0.18)" : "transparent",
-                  color: active === cat ? "#60a5fa" : "#7b8bab",
-                  transition: "all 0.25s",
-                }}
-              >
-                {cat}
-                <span style={{
-                  marginLeft: 6, fontSize: 10,
-                  color: active === cat ? "#60a5fa" : "#7b8bab",
-                }}>
-                  {cat === "All" ? skills.length : skills.filter(s => s.category === cat).length}
-                </span>
-              </button>
-            ))}
+            <div className="flex flex-wrap gap-2 buttons-group">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActive(cat)}
+                  style={{
+                    fontSize: 12, fontWeight: 600,
+                    letterSpacing: "0.08em", textTransform: "uppercase",
+                    padding: "7px 18px", borderRadius: 99, cursor: "pointer",
+                    border: `1px solid ${active === cat ? "rgba(59,130,246,0.5)" : "rgba(59,130,246,0.12)"}`,
+                    background: active === cat ? "rgba(59,130,246,0.18)" : "transparent",
+                    color: active === cat ? "#60a5fa" : "#7b8bab",
+                    transition: "all 0.25s",
+                  }}
+                >
+                  {cat}
+                  <span style={{
+                    marginLeft: 6, fontSize: 10,
+                    color: active === cat ? "#60a5fa" : "#7b8bab",
+                  }}>
+                    {cat === "All" ? skills.length : skills.filter(s => s.category === cat).length}
+                  </span>
+                </button>
+              ))}
+            </div>
 
             {/* Separator + count */}
-            <div style={{ marginLeft: "auto", fontSize: 11, color: "#7b8bab",
+            <div className="skills-count-badge" style={{ fontSize: 11, color: "#7b8bab",
               display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 1, height: 16, background: "rgba(59,130,246,0.15)" }} />
               {filtered.length} skills
@@ -394,9 +396,9 @@ export default function SkillsSection() {
           {/* ── Skills Grid ── */}
           <motion.div
             layout
+            className="skills-grid-container w-full"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
               gap: 16,
             }}
           >
@@ -411,7 +413,7 @@ export default function SkillsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16 flex gap-0 overflow-hidden"
+            className="mt-16 bottom-stats-strip w-full"
             style={{
               border: "1px solid rgba(59,130,246,0.12)",
               borderRadius: 16,
@@ -426,9 +428,9 @@ export default function SkillsSection() {
             ].map(({ label, count, color }, i, arr) => (
               <div
                 key={label}
+                className="stat-box-item"
                 style={{
-                  flex: 1, padding: "24px 20px",
-                  borderRight: i < arr.length - 1 ? "1px solid rgba(59,130,246,0.1)" : "none",
+                  padding: "24px 20px",
                   textAlign: "center",
                 }}
               >
@@ -450,6 +452,52 @@ export default function SkillsSection() {
           </motion.div>
         </div>
       </section>
+
+      {/* ── Precise Responsive Alignment Updates ── */}
+      <style>{`
+        .skills-section-wrapper { padding: 160px 0 140px; }
+        .skills-container { padding-left: 40px; padding-right: 40px; }
+        .row-header-block { flex-direction: row; items: flex-end; mb: 64px; }
+        .section-title-h2 { font-size: clamp(38px, 5.5vw, 64px); }
+        .skills-grid-container { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        .bottom-stats-strip { display: flex; flex-direction: row; }
+        .stat-box-item { flex: 1; border-right: 1px solid rgba(59,130,246,0.1); }
+        .stat-box-item:last-child { border-right: none; }
+        .core-watermark { font-size: clamp(120px, 18vw, 240px); }
+        .clock-wrapper-element { display: block; }
+
+        @media (max-width: 1280px) {
+          .skills-container { padding-left: 40px !important; padding-right: 40px !important; }
+        }
+
+        @media (max-width: 991px) {
+          .row-header-block { flex-direction: column; items: center; text-align: center; gap: 48px; }
+          .eyebrow-element { justify-content: center; }
+          .clock-wrapper-element { margin-top: 12px; display: flex !important; justify-content: center !important; width: 100%; }
+          .filter-tabs-row { flex-direction: column; items: center; gap: 16px; width: 100%; }
+          .skills-count-badge { margin-left: 0 !important; }
+          .buttons-group { justify-content: center; width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+          .skills-section-wrapper { padding: 100px 0 100px; }
+          .skills-container { padding-left: 24px !important; padding-right: 24px !important; }
+          .row-header-block { margin-bottom: 40px; }
+          .bottom-stats-strip { display: grid; grid-template-columns: repeat(2, 1fr); }
+          .stat-box-item { border-right: none !important; border-bottom: 1px solid rgba(59,130,246,0.1); }
+          .stat-box-item:nth-child(3), .stat-box-item:nth-child(4) { border-bottom: none; }
+          .stat-box-item:nth-child(1), .stat-box-item:nth-child(3) { border-right: 1px solid rgba(59,130,246,0.1) !important; }
+        }
+
+        @media (max-width: 480px) {
+          .skills-container { padding-left: 18px !important; padding-right: 18px !important; }
+          .buttons-group { justify-content: center; gap: 6px !important; }
+          .skills-grid-container { grid-template-columns: 1fr; }
+          .bottom-stats-strip { grid-template-columns: 1fr; }
+          .stat-box-item { border-right: none !important; border-bottom: 1px solid rgba(59,130,246,0.1) !important; }
+          .stat-box-item:last-child { border-bottom: none !important; }
+        }
+      `}</style>
     </>
   );
 }
