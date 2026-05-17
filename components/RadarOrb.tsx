@@ -38,19 +38,28 @@ export default function RadarOrb() {
     );
 
     function resize() {
-      const size = canvas.offsetWidth;
-      canvas.width  = size * window.devicePixelRatio;
-      canvas.height = size * window.devicePixelRatio;
+      const currentCanvas = canvasRef.current;
+      if (!currentCanvas) return;
+
+      const size = currentCanvas.offsetWidth;
+      currentCanvas.width  = size * window.devicePixelRatio;
+      currentCanvas.height = size * window.devicePixelRatio;
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
+    
     resize();
-    window.addEventListener("resize", resize);
+    
+    const handleResize = () => resize();
+    window.addEventListener("resize", handleResize);
 
     const SPEED = 0.6; // degrees per frame
 
     function draw() {
-      const W = canvas.offsetWidth;
-      const H = canvas.offsetHeight;
+      const currentCanvas = canvasRef.current;
+      if (!currentCanvas) return;
+
+      const W = currentCanvas.offsetWidth;
+      const H = currentCanvas.offsetHeight;
       const cx = W / 2;
       const cy = H / 2;
       const R  = W * 0.46;
@@ -115,10 +124,6 @@ export default function RadarOrb() {
       const sweepAngle = (angleRef.current * Math.PI) / 180;
       const coneSpan   = (50 * Math.PI) / 180; // 50° wide cone
 
-      const sweepGrad = ctx.createConicalGradient
-        ? null // browser support varies, use manual arc
-        : null;
-
       // Draw cone as filled arc segment with radial fade
       const coneGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
       coneGrad.addColorStop(0,   "rgba(59,130,246,0.35)");
@@ -151,16 +156,14 @@ export default function RadarOrb() {
       // ── Check for new pings ──
       const now = performance.now();
       PING_SPOTS.forEach(({ r, a }) => {
-        // Normalise ping angle to [0,360)
         const pingAngle = a % 360;
         const sweepDeg  = ((angleRef.current % 360) + 360) % 360;
 
-        // Trigger ping when sweep passes ping angle (within 2° window)
         const diff = Math.abs(sweepDeg - pingAngle);
         if (diff < SPEED * 1.5 || diff > 360 - SPEED * 1.5) {
           const px = cx + Math.cos((a * Math.PI) / 180) * R * r;
           const py = cy + Math.sin((a * Math.PI) / 180) * R * r;
-          // Check not already alive recently
+          
           const alreadyAlive = pingsRef.current.some(
             (p) => Math.hypot(p.x - px, p.y - py) < 4 && now - p.born < 1800
           );
@@ -173,7 +176,7 @@ export default function RadarOrb() {
       // ── Draw & age pings ──
       pingsRef.current = pingsRef.current.filter((p) => now - p.born < 3000);
       pingsRef.current.forEach((p) => {
-        const age      = (now - p.born) / 3000; // 0→1
+        const age      = (now - p.born) / 3000;
         const opacity  = Math.max(0, 1 - age);
         const ringSize = 2 + age * 12;
 
@@ -190,7 +193,7 @@ export default function RadarOrb() {
           const ring2 = 2 + age2 * 10;
           ctx.beginPath();
           ctx.arc(p.x, p.y, ring2, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(59,130,246,${Math.max(0,1-age2-age2)*0.4})`;
+          ctx.strokeStyle = `rgba(59,130,246,${Math.max(0, 1 - age2 - age2) * 0.4})`;
           ctx.lineWidth   = 0.5;
           ctx.stroke();
         }
@@ -239,7 +242,7 @@ export default function RadarOrb() {
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 

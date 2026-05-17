@@ -662,6 +662,8 @@ export default function Navbar() {
           borderRadius: navRadius,
           zIndex: 100,
           fontFamily: "'Space Grotesk', sans-serif",
+          /* Change: overflow hidden add kiya taake scrolled state par inner layout content round caps se touch ya overlap na kare */
+          overflow: scrolled ? 'hidden' : 'visible',
         }}
       >
         <div
@@ -720,6 +722,7 @@ export default function Navbar() {
           style={{
             position: 'absolute',
             bottom: 0,
+            width: '100%',
             left: 0,
             height: 1,
             background: 'linear-gradient(90deg,#2563eb,#60a5fa)',
@@ -729,7 +732,6 @@ export default function Navbar() {
             opacity: scrolled ? 1 : 0,
             transition: 'opacity 0.3s',
           }}
-          style2={{ width: '100%' }}
         />
       </motion.nav>
 
@@ -770,11 +772,11 @@ export default function Navbar() {
             top: 12px !important; left: 16px !important; width: calc(100% - 32px) !important;
             padding: 10px 18px !important;
           }
-          .logo-text span { font-size: 15px; } /* Slightly scaled down logo text */
+          .logo-text span { font-size: 15px; } 
           .desktop-nav  { display: none  !important; }
           .desktop-cta  { display: none  !important; }
           .mobile-toggle{ display: block !important; }
-          .mobile-nav-label { font-size: max(1.35rem, 4.5vw); } /* Fluid scaling for mobile side panel links */
+          .mobile-nav-label { font-size: max(1.35rem, 4.5vw); } 
         }
       `}</style>
     </>

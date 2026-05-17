@@ -229,7 +229,6 @@ export default function SkillsSection() {
         </div>
 
         {/* ── Content ── */}
-        {/* Fix: Centered structural layout to match other premium sections seamlessly */}
         <div className="relative z-10 max-w-7xl mx-auto skills-container w-full">
 
           {/* ── Header + Clock row ── */}
@@ -258,7 +257,8 @@ export default function SkillsSection() {
                 className="section-title-h2"
                 style={{
                   fontFamily: "'Syne',sans-serif",
-                  fontWeight: 800, leading: 1.06,
+                  fontWeight: 800, 
+                  lineHeight: 1.06, // <── FIX: Changed from 'leading' to 'lineHeight' for type safety
                   letterSpacing: "-0.03em", color: "#e2e8f5",
                 }}
               >
@@ -315,7 +315,7 @@ export default function SkillsSection() {
                 <div style={{
                   position: "absolute", inset: -6,
                   borderRadius: "50%",
-                  border: "1px dashed rgba(59,130,246,0.1)",
+                  border: "1px dashed rgba(59,130,246,0.07)",
                   animation: "spin-slow 20s linear infinite reverse",
                 }} />
                 <style>{`

@@ -31,34 +31,34 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const particlesOptions = useMemo(() => ({
-    fullScreen: { enable: false }, 
-    background: { color: { value: "transparent" } },
-    fpsLimit: 60,
-    interactivity: {
-      events: { onHover: { enable: true, mode: "grab" } },
-      modes: {
-        grab: { distance: 200, links: { opacity: 0.9, color: "#3b82f6" } }
-      },
+ const particlesOptions = useMemo(() => ({
+  fullScreen: { enable: false }, 
+  background: { color: { value: "transparent" } },
+  fpsLimit: 60,
+  interactivity: {
+    events: { onHover: { enable: true, mode: "grab" } },
+    modes: {
+      grab: { distance: 200, links: { opacity: 0.9, color: "#3b82f6" } }
     },
-    particles: {
-      color: { value: ["#3b82f6", "#ffffff"] },
-      links: { color: "#ffffff", distance: 140, enable: true, opacity: 0.2, width: 1 },
-      move: { 
-        enable: true, 
-        speed: 0.6, 
-        direction: "none", 
-        outModes: { default: "out" },
-        random: true,
-        straight: false
-      },
-      number: { density: { enable: true, area: 800 }, value: 70 },
-      opacity: { value: { min: 0.3, max: 0.7 } },
-      shape: { type: "circle" },
-      size: { value: { min: 1, max: 2 } },
+  },
+  particles: {
+    color: { value: ["#3b82f6", "#ffffff"] }, // Ab yeh normal mutable array hai, readonly nahi
+    links: { color: "#ffffff", distance: 140, enable: true, opacity: 0.2, width: 1 },
+    move: { 
+      enable: true, 
+      speed: 0.6, 
+      direction: "none" as const, // <── FIX 1: Sirf isko as const rakhein taake exact value target ho
+      outModes: { default: "out" as const }, // <── FIX 2: Outmode ko bhi strict literal typecast kiya
+      random: true,
+      straight: false
     },
-    detectRetina: true,
-  }), []);
+    number: { density: { enable: true, area: 800 }, value: 70 },
+    opacity: { value: { min: 0.3, max: 0.7 } },
+    shape: { type: "circle" as const }, // <── FIX 3: Safe typecast for shape
+    size: { value: { min: 1, max: 2 } },
+  },
+  detectRetina: true,
+}), []);
 
   const memoizedParticles = useMemo(() => {
     if (!init) return null;

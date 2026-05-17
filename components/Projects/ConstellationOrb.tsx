@@ -62,23 +62,36 @@ export default function ConstellationOrb({ activeIndex, totalProjects }: Constel
     );
 
     function resize() {
+      const currentCanvas = canvasRef.current;
+      if (!currentCanvas) return; // <── FIX 1: Strict condition check inside resize block
+
       const dpr = window.devicePixelRatio || 1;
-      const w   = canvas.offsetWidth;
-      const h   = canvas.offsetHeight;
-      canvas.width  = w * dpr;
-      canvas.height = h * dpr;
+      const w   = currentCanvas.offsetWidth;
+      const h   = currentCanvas.offsetHeight;
+      currentCanvas.width  = w * dpr;
+      currentCanvas.height = h * dpr;
       ctx.scale(dpr, dpr);
       initNodes(w, h);
     }
+    
     resize();
-    window.addEventListener("resize", () => { ctx.resetTransform(); resize(); });
+    
+    // Fix 2: Named reference function variable initialized for robust window removal tracking
+    const handleResize = () => {
+      ctx.resetTransform();
+      resize();
+    };
+    window.addEventListener("resize", handleResize);
 
     const CONNECT_DIST = 90;
     const ACTIVE_DIST  = 120;
 
     function draw() {
-      const W = canvas.offsetWidth;
-      const H = canvas.offsetHeight;
+      const currentCanvas = canvasRef.current;
+      if (!currentCanvas) return; // <── FIX 3: Safety Guard clause inserted to stop background canvas reference crashes on route shifts
+
+      const W = currentCanvas.offsetWidth;
+      const H = currentCanvas.offsetHeight;
       ctx.clearRect(0, 0, W, H);
 
       const nodes  = nodesRef.current;
@@ -192,9 +205,10 @@ export default function ConstellationOrb({ activeIndex, totalProjects }: Constel
     }
 
     rafRef.current = requestAnimationFrame(draw);
+    
     return () => {
       cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", handleResize); // <── Fix 4: Clean memory pointers explicitly
     };
   }, [initNodes, totalProjects]);
 
