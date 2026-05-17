@@ -603,9 +603,9 @@ export default function ContactSection() {
               marginTop: 28,
             }}
           >
-            <span style={{ fontFamily: "'Syne',sans-serif", fontNav: "bold", fontWeight: 700, color: "#e2e8f5", letterSpacing: "-0.01em" }}>
-              Muhammad Ahmed<span style={{ color: "#3b82f6" }}>.</span>
-            </span>
+            <span style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, color: "#e2e8f5", letterSpacing: "-0.01em" }}>
+  Muhammad Ahmed<span style={{ color: "#3b82f6" }}>.</span>
+</span>
             <span className="footer-copyright-text">Crafted with precision · {new Date().getFullYear()}</span>
             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px rgba(74,222,128,0.5)" }} />
