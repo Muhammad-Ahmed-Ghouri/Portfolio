@@ -97,10 +97,11 @@ const contactInfo = [
 
 // ── Input component ────────────────────────────────────────────────────────
 function FormField({
-  label, type = "text", placeholder, textarea = false, delay = 0,
+  label, type = "text", placeholder, textarea = false, delay = 0, value, onChange,
 }: {
   label: string; type?: string; placeholder: string;
-  textarea?: boolean; delay?: number;
+  textarea?: boolean; delay?: number; value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }) {
   const [focused, setFocused] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -139,6 +140,8 @@ function FormField({
         <textarea
           placeholder={placeholder}
           rows={5}
+          value={value}
+          onChange={onChange}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           style={sharedStyle}
@@ -147,6 +150,8 @@ function FormField({
         <input
           type={type}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           style={sharedStyle}
@@ -162,6 +167,12 @@ export default function ContactSection() {
   const lineRef    = useRef<HTMLDivElement>(null);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -173,9 +184,32 @@ export default function ContactSection() {
     return () => ctx.revert();
   }, []);
 
-  function handleSend() {
+async function handleSend() {
+    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+      alert("Please fill all the fields.");
+      return;
+    }
+
     setSending(true);
-    setTimeout(() => { setSending(false); setSent(true); }, 1800);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSent(true);
+        setFormData({ name: "", email: "", subject: "", message: "" }); // Reset form
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to transmit signal.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -536,12 +570,12 @@ export default function ContactSection() {
                   </div>
 
                   <div className="form-name-email-row" style={{ display: "grid", gap: 16 }}>
-                    <FormField label="Name"  placeholder="Your name"  delay={0.1} />
-                    <FormField label="Email" type="email" placeholder="your@email.com" delay={0.15} />
+                    <FormField label="Name"  placeholder="Your name"  delay={0.1} value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}/>
+                    <FormField label="Email" type="email" placeholder="your@email.com" delay={0.15} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })}/>
                   </div>
 
-                  <FormField label="Subject" placeholder="What's this about?" delay={0.2} />
-                  <FormField label="Message" placeholder="Tell me about your project or idea..." textarea delay={0.25} />
+                  <FormField label="Subject" placeholder="What's this about?" delay={0.2} value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })}/>
+                  <FormField label="Message" placeholder="Tell me about your project or idea..." textarea delay={0.25} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}/>
 
                   {/* Send button */}
                   <motion.button
