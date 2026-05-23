@@ -288,7 +288,7 @@ function CTAButton() {
   return (
     <motion.a
       ref={ref as React.Ref<HTMLAnchorElement>}
-      href="/resume.pdf"
+      href="https://drive.google.com/file/d/14prq3M2W564-xWt8zKpyBUJwWhFCBtin/view?usp=drive_link"
       target="_blank"
       rel="noopener noreferrer"
       style={{
